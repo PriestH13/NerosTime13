@@ -10,8 +10,10 @@ def login_view(request):
             login(request, user)
             return redirect('core_home')
         else:
-            return render(request, 'auth_security/login.html', {'error': 'Credenziali non valide'})
-    return render(request, 'auth_security/login.html')
+            return render(request, 'base_login/login.html', {
+                'error': 'Credenziali non valide'
+            })
+    return render(request, 'base_login/login.html')
 
 def logout_view(request):
     logout(request)

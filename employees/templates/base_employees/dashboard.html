@@ -1,0 +1,121 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operator Portal | WorkPortal</title>
+    <link rel="icon" href="{% static 'images/nerostime13_logo.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/employees.css' %}">
+</head>
+<body>
+    {% include 'partials/navbar_operator.html' %}
+
+    
+    <div class="container">
+        <!-- Premium welcome section -->
+        <div class="welcome-banner">
+            <div class="welcome-text">
+                <h2>Welcome, Mario Rossi!</h2>
+                <p>Here's a summary of your activities and important information</p>
+            </div>
+        </div>
+        
+        <!-- Dashboard with premium cards -->
+        <div class="dashboard">
+            <a href="#shifts" class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-calendar-alt"></i> Shifts</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-calendar-day"></i>
+                    </div>
+                </div>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Today: 09:00 - 17:00</li>
+                    <li><i class="fas fa-clock"></i> Tomorrow: 13:00 - 21:00</li>
+                    <li><i class="fas fa-exchange-alt"></i> 1 swap request</li>
+                </ul>
+            </a>
+            
+            <a href="#leave" class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-umbrella-beach"></i> Leave</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-sun"></i>
+                    </div>
+                </div>
+                <ul>
+                    <li><i class="fas fa-paper-plane"></i> 2 pending requests</li>
+                    <li><i class="fas fa-check"></i> 5 approved days</li>
+                    <li><i class="fas fa-clock"></i> 12 available days</li>
+                </ul>
+            </a>
+            
+            <a href="#notifications" class="card highlight-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-bell"></i> Notifications</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                </div>
+                <ul>
+                    <li><i class="fas fa-calendar-plus"></i> New shift on 07/15</li>
+                    <li><i class="fas fa-check-circle"></i> Leave approved for August</li>
+                    <li><i class="fas fa-user-friends"></i> Luca accepted the swap</li>
+                </ul>
+            </a>
+            
+            <a href="#hours" class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-chart-line"></i> Work Hours</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                </div>
+                <ul>
+                    <li><i class="fas fa-calendar-week"></i> This week: 38h</li>
+                    <li><i class="fas fa-calendar-month"></i> This month: 152h</li>
+                    <li><i class="fas fa-bolt"></i> Overtime: 8h</li>
+                </ul>
+            </a>
+            
+            <a href="#feedback" class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-comments"></i> Feedback</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <ul>
+                    <li><i class="fas fa-thumbs-up"></i> Last evaluation: 4.5/5</li>
+                    <li><i class="fas fa-lightbulb"></i> 2 new suggestions</li>
+                </ul>
+            </a>
+        </div>
+        
+        <!-- Premium statistics -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <i class="fas fa-calendar-check"></i>
+                <div class="stat-value">87%</div>
+                <div class="stat-label">Monthly attendance</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-clock"></i>
+                <div class="stat-value">152h</div>
+                <div class="stat-label">Work hours</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-exchange-alt"></i>
+                <div class="stat-value">3</div>
+                <div class="stat-label">Completed swaps</div>
+            </div>
+        </div>
+    </div>
+    
+    {% include 'partials/footer_operator.html' %}
+
+
+    <script rel="stylesheet" href={% static 'js/employees.js' %}></script>
+</body>
+</html>

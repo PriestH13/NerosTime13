@@ -1,0 +1,146 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal | WorkAdmin</title>
+    <link rel="icon" href="{% static 'images/nerostime13_logo.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/admin.css' %}">
+</head>
+<body>
+    {% include 'partials/navbar_admin.html' %}
+
+    <div class="container">
+
+    </div>
+    <div class="container">
+        <!-- Admin welcome section -->
+        <div class="welcome-banner">
+            <div class="welcome-text">
+                <h2>Administration Dashboard</h2>
+                <p>Manage all operational portal functionalities</p>
+            </div>
+            <div class="admin-alert">
+                <i class="fas fa-exclamation-circle"></i>
+                <div>5 requests pending approval</div>
+            </div>
+        </div>
+        
+        <!-- Admin dashboard -->
+        <div class="dashboard">
+            <a href="#leave-management" class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-umbrella-beach"></i> Leave Management</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                </div>
+                <ul>
+                    <li><i class="fas fa-clock"></i> 12 pending requests</li>
+                    <li><i class="fas fa-calendar-week"></i> Absence planning</li>
+                    <li><i class="fas fa-file-export"></i> Monthly reports</li>
+                </ul>
+            </a>
+            
+            <a href="#approvals" class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-check-double"></i> Approvals</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                </div>
+                <ul>
+                    <li><i class="fas fa-user-clock"></i> 5 leave requests</li>
+                    <li><i class="fas fa-exchange-alt"></i> 3 shift swaps</li>
+                    <li><i class="fas fa-user-plus"></i> 2 new requests</li>
+                </ul>
+            </a>
+            
+            <a href="#shift-assignment" class="card highlight-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-user-cog"></i> Shift Assignment</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-users-cog"></i>
+                    </div>
+                </div>
+                <ul>
+                    <li><i class="fas fa-chess-queen"></i> Priority management</li>
+                    <li><i class="fas fa-sync-alt"></i> Automatic rotation</li>
+                    <li><i class="fas fa-calendar-plus"></i> Advanced planning</li>
+                </ul>
+            </a>
+            
+            <a href="#reports" class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-chart-pie"></i> Reporting</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                </div>
+                <ul>
+                    <li><i class="fas fa-file-contract"></i> Attendance reports</li>
+                    <li><i class="fas fa-clock"></i> Work hours analysis</li>
+                    <li><i class="fas fa-balance-scale"></i> Shift balancing</li>
+                </ul>
+            </a>
+            
+            <a href="#messaging" class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-comments"></i> Messaging</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                </div>
+                <ul>
+                    <li><i class="fas fa-inbox"></i> 5 new messages</li>
+                    <li><i class="fas fa-bullhorn"></i> Staff communications</li>
+                    <li><i class="fas fa-history"></i> Conversation archive</li>
+                </ul>
+            </a>
+            
+            <a href="#configuration" class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-tools"></i> Configuration</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-sliders-h"></i>
+                    </div>
+                </div>
+                <ul>
+                    <li><i class="fas fa-calendar-day"></i> Company holidays</li>
+                    <li><i class="fas fa-sync"></i> Calendar sync</li>
+                    <li><i class="fas fa-user-shield"></i> User permissions</li>
+                </ul>
+            </a>
+        </div>
+        
+        <!-- Admin statistics -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <i class="fas fa-clock"></i>
+                <div class="stat-value">24</div>
+                <div class="stat-label">Pending requests</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-calendar-check"></i>
+                <div class="stat-value">87%</div>
+                <div class="stat-label">Monthly attendance</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-exchange-alt"></i>
+                <div class="stat-value">15</div>
+                <div class="stat-label">Swaps this month</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-envelope"></i>
+                <div class="stat-value">8</div>
+                <div class="stat-label">Unread messages</div>
+            </div>
+        </div>
+    </div>
+    
+    {% include 'partials/footer_admin.html' %}
+
+    <script rel="stylesheet" href={% static 'js/admin.js' %}></script>
+</body>
+</html>
