@@ -218,7 +218,7 @@ nav li a i {
     height: 0;
 }
 
-.card::after {
+/* .card::after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -227,7 +227,7 @@ nav li a i {
     height: 4px;
     background: linear-gradient(to right, var(--accent), var(--accent-light));
     transition: width 0.3s ease;
-}
+} */
 
 .card:hover::after {
     width: 0;
@@ -415,3 +415,4 @@ footer {
         padding: 1.5rem;
     }
 }
+    a { text-decoration: none; }
