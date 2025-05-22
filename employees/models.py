@@ -18,39 +18,6 @@ class UserProfileEmp(models.Model):
         verbose_name = "User Profile"
         verbose_name_plural = "User Profiles"
 
-
-class LeaveRequest(models.Model):
-
-    LEAVE_TYPES = [
-        ('SICK', 'Sick Leave'),
-        ('VACATION', 'Vacation Leave'),
-        ('PERSONAL', 'Personal Leave'),
-        ('UNPAID', 'Unpaid Leave'),
-    ]
-    REQUEST_STATUS = [
-        ('PENDING', 'Pending'),
-        ('APPROVED', 'Approved'),
-        ('REJECTED', 'Rejected'),
-    ]
-
-    user = models.ForeignKey(UserProfileEmp, on_delete=models.CASCADE, related_name='leave_requests')
-    leave_type = models.CharField(max_length=20, choices=LEAVE_TYPES)
-    start_date = models.DateField()
-    end_date = models.DateField()
-    status = models.CharField(max_length=20, choices=REQUEST_STATUS, default='PENDING')
-    request_date = models.DateTimeField(default=timezone.now)
-    notes = models.TextField(blank=True, null=True)
-    approver = models.ForeignKey(UserProfileEmp, on_delete=models.SET_NULL, null=True, blank=True, related_name='approved_leaves')
-    def duration(self):
-        return (self.end_date - self.start_date).days + 1
-    def __str__(self):
-        return f"{self.leave_type} leave by {self.user} from {self.start_date} to {self.end_date}"
-
-    class Meta:
-        verbose_name = "Leave Request"
-        verbose_name_plural = "Leave Requests"
-
-
 # This model is used to define the types of shifts available in the system.(E.g., Morning, Evening, Night)
 class ShiftType(models.Model):
     name = models.CharField(max_length=50)
