@@ -1,0 +1,30 @@
+{% load static %}
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crea Impiegato | WorkAdmin</title>
+    <link rel="icon" href="{% static 'images/nerostime13_logo.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/admin.css' %}">
+</head>
+<body>
+    {% include 'partials/navbar_admin.html' %}
+    <div class="container">
+        <div class="welcome-banner">
+            <div class="welcome-text">
+                <h2>Crea Impiegato</h2>
+                <p>Aggiungi un nuovo impiegato al sistema</p>
+            </div>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn"><i class="fas fa-save"></i> Crea</button>
+        </form>
+        <a href="{% url 'admin_interface:employee_list' %}" class="btn"><i class="fas fa-arrow-left"></i> Torna alla Lista</a>
+    </div>
+    {% include 'partials/footer_admin.html' %}
+    <script src="{% static 'js/admin.js' %}"></script>
+</body>
+</html>

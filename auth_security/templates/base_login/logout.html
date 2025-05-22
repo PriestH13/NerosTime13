@@ -1,0 +1,15 @@
+{% extends 'base_login/login.html' %}
+{% load static %}
+
+{% block title %}Logout | Authentication System{% endblock %}
+
+{% block header %}
+<h2>Logged Out</h2>
+<p>You have been successfully logged out.</p>
+{% endblock %}
+
+{% block content %}
+<div class="register-link">
+    <a href="{% url 'auth_security:login' %}">Login again</a>
+</div>
+{% endblock %}
