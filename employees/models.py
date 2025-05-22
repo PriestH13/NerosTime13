@@ -18,7 +18,6 @@ class UserProfileEmp(models.Model):
         verbose_name = "User Profile"
         verbose_name_plural = "User Profiles"
 
-
 # This model is used to define the types of shifts available in the system.(E.g., Morning, Evening, Night)
 class ShiftType(models.Model):
     name = models.CharField(max_length=50)
