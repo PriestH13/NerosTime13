@@ -1,20 +1,26 @@
+from django.views import View
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 
-def login_view(request):
-    if request.method == 'POST':
+class LoginView(View):
+    template_name = 'base_login/login.html'
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
-        if user:
+        if user is not None:
             login(request, user)
-            return redirect('core_home')
+            return redirect('core_home')  # Cambia con la tua url di home dopo login
         else:
-            return render(request, 'base_login/login.html', {
-                'error': 'Credenziali non valide'
-            })
-    return render(request, 'base_login/login.html')
+            context = {'error': 'Credenziali non valide'}
+            return render(request, self.template_name, context)
 
-def logout_view(request):
-    logout(request)
-    return redirect('login')
+
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        return redirect('login')

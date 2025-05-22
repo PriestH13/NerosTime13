@@ -1,0 +1,51 @@
+{% load static %}
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Impiegati | WorkAdmin</title>
+    <link rel="icon" href="{% static 'images/nerostime13_logo.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/admin.css' %}">
+</head>
+<body>
+    {% include 'partials/navbar_admin.html' %}
+    <div class="container">
+        <div class="welcome-banner">
+            <div class="welcome-text">
+                <h2>Lista Impiegati</h2>
+                <p>Gestisci gli impiegati del sistema</p>
+            </div>
+        </div>
+        <a href="{% url 'admin_interface:create_employee' %}" class="btn"><i class="fas fa-user-plus"></i> Aggiungi Nuovo Impiegato</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome Utente</th>
+                    <th>Email</th>
+                    <th>Azioni</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for employee in employees %}
+                <tr>
+                    <td>{{ employee.username }}</td>
+                    <td>{{ employee.email }}</td>
+                    <td>
+                        <a href="{% url 'admin_interface:update_employee' employee.pk %}"><i class="fas fa-edit"></i> Modifica</a>
+                        <a href="{% url 'admin_interface:delete_employee' employee.pk %}"><i class="fas fa-trash"></i> Elimina</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3">Nessun impiegato trovato.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'admin_interface:admin_dashboard' %}" class="btn"><i class="fas fa-arrow-left"></i> Torna alla Dashboard</a>
+    </div>
+    {% include 'partials/footer_admin.html' %}
+    <script src="{% static 'js/admin.js' %}"></script>
+</body>
+</html>
