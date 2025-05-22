@@ -51,130 +51,44 @@ class LeaveRequest(models.Model):
         verbose_name_plural = "Leave Requests"
 
 
-class Shift(models.Model):
-
-    user = models.ForeignKey(UserProfileEmp, on_delete=models.CASCADE, related_name='shifts')
-    date = models.DateField()
+# This model is used to define the types of shifts available in the system.(E.g., Morning, Evening, Night)
+class ShiftType(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.TextField(blank=True, null=True)
     start_time = models.TimeField()
     end_time = models.TimeField()
-    description = models.CharField(max_length=200, blank=True, null=True)
-    priority = models.IntegerField(default=1)
 
     def __str__(self):
-        return f"Shift for {self.user} on {self.date} ({self.start_time} - {self.end_time})"
+        return self.name
+
+    class Meta:
+        verbose_name = "Shift Type"
+        verbose_name_plural = "Shift Types"
+
+
+class Shift(models.Model):
+    user = models.ForeignKey(UserProfileEmp, on_delete=models.CASCADE, related_name='shifts')
+    date = models.DateField()
+    shift_type = models.ForeignKey(ShiftType, on_delete=models.CASCADE, related_name='shifts')
+    description = models.CharField(max_length=200, blank=True, null=True)
+
+    @property
+    def start_time(self):
+        return self.shift_type.start_time
+
+    @property
+    def end_time(self):
+        return self.shift_type.end_time
+
+    def __str__(self):
+        return f"{self.shift_type.name} shift for {self.user} on {self.date} ({self.start_time} - {self.end_time})"
 
     class Meta:
         verbose_name = "Shift"
         verbose_name_plural = "Shifts"
 
 
-class ShiftSwap(models.Model):
-
-    SWAP_STATUS = [
-        ('PENDING', 'Pending'),
-        ('APPROVED', 'Approved'),
-        ('REJECTED', 'Rejected'),
-    ]
-
-    requester_shift = models.ForeignKey(Shift, on_delete=models.CASCADE, related_name='swap_requests')
-    proposed_shift = models.ForeignKey(Shift, on_delete=models.CASCADE, related_name='swap_proposals')
-    requester = models.ForeignKey(UserProfileEmp, on_delete=models.CASCADE, related_name='swap_requests_made')
-    recipient = models.ForeignKey(UserProfileEmp, on_delete=models.CASCADE, related_name='swap_requests_received')
-    status = models.CharField(max_length=20, choices=SWAP_STATUS, default='PENDING')
-    request_date = models.DateTimeField(default=timezone.now)
-    notes = models.TextField(blank=True, null=True)
-
-    def __str__(self):
-        return f"Shift swap between {self.requester} and {self.recipient}"
-
-    class Meta:
-        verbose_name = "Shift Swap"
-        verbose_name_plural = "Shift Swaps"
-
-
-class Message(models.Model):
-
-    sender = models.ForeignKey(UserProfileEmp, on_delete=models.CASCADE, related_name='sent_messages')
-    recipient = models.ForeignKey(UserProfileEmp, on_delete=models.CASCADE, related_name='received_messages')
-    subject = models.CharField(max_length=200)
-    content = models.TextField()
-    sent_date = models.DateTimeField(default=timezone.now)
-    read = models.BooleanField(default=False)
-
-    def __str__(self):
-        return f"Message from {self.sender} to {self.recipient}: {self.subject}"
-
-    class Meta:
-        verbose_name = "Message"
-        verbose_name_plural = "Messages"
-
-
-class Report(models.Model):
-
-    REPORT_TYPE = [
-        ('ATTENDANCE', 'Attendance'),
-        ('WORK_HOURS', 'Work Hours'),
-        ('SHIFT_BALANCE', 'Shift Balancing'),
-    ]
-
-    report_type = models.CharField(max_length=50, choices=REPORT_TYPE)
-    generated_date = models.DateTimeField(default=timezone.now)
-    user = models.ForeignKey(UserProfileEmp, on_delete=models.CASCADE, related_name='reports', null=True, blank=True)
-    data = models.JSONField()
-    description = models.TextField(blank=True, null=True)
-
-    def __str__(self):
-        return f"Report {self.report_type} - {self.generated_date}"
-
-    class Meta:
-        verbose_name = "Report"
-        verbose_name_plural = "Reports"
-
-
-class Configuration(models.Model):
-
-    key = models.CharField(max_length=100, unique=True)
-    value = models.TextField()
-    description = models.CharField(max_length=200, blank=True, null=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return f"Configuration: {self.key}"
-
-    class Meta:
-        verbose_name = "Configuration"
-        verbose_name_plural = "Configurations"
-
-
-class Notification(models.Model):
-
-    NOTIFICATION_TYPES = [
-        ('SHIFT', 'New Shift'),
-        ('LEAVE', 'Leave Update'),
-        ('SWAP', 'Shift Swap Update'),
-        ('GENERAL', 'General Notification'),
-    ]
-
-    user = models.ForeignKey(UserProfileEmp, on_delete=models.CASCADE, related_name='notifications')
-    notification_type = models.CharField(max_length=20, choices=NOTIFICATION_TYPES)
-    title = models.CharField(max_length=200)
-    message = models.TextField()
-    created_at = models.DateTimeField(default=timezone.now)
-    read = models.BooleanField(default=False)
-    related_shift = models.ForeignKey(Shift, on_delete=models.SET_NULL, null=True, blank=True, related_name='notifications')
-    related_leave = models.ForeignKey(LeaveRequest, on_delete=models.SET_NULL, null=True, blank=True, related_name='notifications')
-    related_swap = models.ForeignKey(ShiftSwap, on_delete=models.SET_NULL, null=True, blank=True, related_name='notifications')
-
-    def __str__(self):
-        return f"{self.notification_type} notification for {self.user}: {self.title}"
-
-    class Meta:
-        verbose_name = "Notification"
-        verbose_name_plural = "Notifications"
-
-
 class WorkHours(models.Model):
-
     user = models.ForeignKey(UserProfileEmp, on_delete=models.CASCADE, related_name='work_hours')
     date = models.DateField()
     hours_worked = models.FloatField(default=0.0)
@@ -187,20 +101,3 @@ class WorkHours(models.Model):
     class Meta:
         verbose_name = "Work Hours"
         verbose_name_plural = "Work Hours"
-
-
-class Feedback(models.Model):
-
-    user = models.ForeignKey(UserProfileEmp, on_delete=models.CASCADE, related_name='feedbacks')
-    rating = models.FloatField(null=True, blank=True)
-    comment = models.TextField(blank=True, null=True)
-    submitted_at = models.DateTimeField(default=timezone.now)
-    reviewer = models.ForeignKey(UserProfileEmp, on_delete=models.SET_NULL, null=True, blank=True, related_name='reviewed_feedbacks')
-    is_suggestion = models.BooleanField(default=False)
-
-    def __str__(self):
-        return f"Feedback for {self.user} ({'Suggestion' if self.is_suggestion else 'Evaluation'})"
-
-    class Meta:
-        verbose_name = "Feedback"
-        verbose_name_plural = "Feedbacks"
